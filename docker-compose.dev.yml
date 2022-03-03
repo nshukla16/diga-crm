@@ -1,0 +1,32 @@
+version: '2'
+services:
+    nginx:
+        build: ./docker_data/nginx
+        container_name: nginx
+        ports:
+            - "82:80"
+        links:
+            - php
+
+    mysql:
+        image: mysql:5.7
+        container_name: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_DATABASE=diga
+            - MYSQL_USER=diga
+            - MYSQL_PASSWORD=password
+        volumes:
+            - dbdata:/var/lib/mysql
+
+    php:
+        build: ./docker_data/php
+        container_name: php-fpm
+        volumes:
+            - ./docker_data/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./:/var/www/html/
+        links:
+            - mysql
+
+volumes:
+    dbdata:

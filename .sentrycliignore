@@ -1,0 +1,5 @@
+pdfjsWorker.js
+pdfjsWorker.js.map
+*.worker.js
+*.worker.js.map
+*.css.map

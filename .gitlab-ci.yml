@@ -1,0 +1,44 @@
+image: rpger/digaerp:v5
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  MIX_PUSHER_KEY: "d27fc13766ed436d16b1"
+
+cache:
+  key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+  untracked: true
+  paths:
+    - /usr/local/lib/node_modules
+    - node_modules/
+    - vendor/
+
+stages:
+  - build
+
+main:
+  stage: build
+  tags:
+    - gitlab-org-docker
+  script:
+    - echo "${CI_COMMIT_TAG}" > VERSION
+    - composer install --no-dev --ignore-platform-reqs
+    - npm install
+    - php artisan vendor:publish --tag=lang --force
+    - php artisan vendor:publish --tag=erp-public --force
+    - php artisan vendor:publish --tag=erp-config --force
+    - php artisan vue-i18n:generate
+    - npm run prod
+    - rm -rf node_modules/
+    - rm -rf .git/
+    - rm .gitlab-ci.yml
+    - rm .gitlab-ci.yml.old
+    - rm .gitignore
+    - rm .gitattributes
+    - find . -name "*.js.map" -exec rm {} \;
+    - find . -name "*.css.map" -exec rm {} \;
+    - ls -la /builds
+    - ls -la /builds/diga.pt
+    - ls -la /builds/diga.pt/erp
+  artifacts:
+    paths:
+      - /builds/diga.pt/erp/

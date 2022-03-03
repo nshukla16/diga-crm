@@ -1,0 +1,4 @@
+/vendor/
+/node_modules/
+mix-manifest.json
+package-lock.json

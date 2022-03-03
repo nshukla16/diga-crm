@@ -1,0 +1,6 @@
+static/styles/themes/Funny/
+.idea
+vendor/
+modules/CoreWebclient/node_modules/
+data/cache
+data/logs

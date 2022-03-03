@@ -1,0 +1,7 @@
+[auth]
+token=164c9a1c0b9d4f039e275ced61d42014163b145721f24dbaa515f155a9c460dd
+
+[defaults]
+url=https://sentry.diga.pt/
+org=sentry
+project=diga-frontend

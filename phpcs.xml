@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ruleset name="PSR2">
+    <description>The PSR2 coding standard.</description>
+    <rule ref="PSR2">
+        <exclude name="Generic.ControlStructures.InlineControlStructure"/>
+        <exclude name="Generic.Files.LineLength"/>
+        <exclude name="PSR1.Files.SideEffects"/>
+        <exclude name="PSR1.Methods.CamelCapsMethodName"/>
+        <exclude name="PSR2.Classes.ClassDeclaration"/>
+        <exclude name="PSR2.Classes.PropertyDeclaration"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature"/>
+        <exclude name="PSR2.Methods.FunctionClosingBrace"/>
+        <exclude name="Squiz.Classes.ValidClassName"/>
+        <exclude name="Squiz.ControlStructures.ControlSignature"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration"/>
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace"/>
+    </rule>
+    <file>app/</file>
+    <file>packages/Rkesa/Calendar/src/</file>
+    <file>packages/Rkesa/CalendarExtended/src/</file>
+    <file>packages/Rkesa/Client/src/</file>
+    <file>packages/Rkesa/Dashboard/src/</file>
+    <file>packages/Rkesa/Email/src/</file>
+    <file>packages/Rkesa/Estimate/src/</file>
+    <file>packages/Rkesa/EstimateFork/src/</file>
+    <file>packages/Rkesa/Hr/src/</file>
+    <file>packages/Rkesa/Project/src/</file>
+    <file>packages/Rkesa/Service/src/</file>
+    <exclude-pattern>app/Http/Controllers/CheckfrontAPI.php</exclude-pattern>
+    <exclude-pattern>vendor</exclude-pattern>
+    <exclude-pattern>resources</exclude-pattern>
+    <exclude-pattern>database/</exclude-pattern>
+    <exclude-pattern>storage/</exclude-pattern>
+    <exclude-pattern>node_modules/</exclude-pattern>
+</ruleset>

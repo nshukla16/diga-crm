@@ -1,0 +1,162 @@
+image: tetraweb/php:7.1
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+cache:
+  key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+  untracked: true
+  paths:
+    - /usr/local/lib/node_modules
+    - node_modules/
+    - packages/Rkesa/Calendar/node_modules/
+    - packages/Rkesa/Client/node_modules/
+    - packages/Rkesa/Estimate/node_modules/
+    - packages/Rkesa/EstimateFork/node_modules/
+    - packages/Rkesa/Hr/node_modules/
+    - packages/Rkesa/Email/node_modules/
+    - packages/Rkesa/Service/node_modules/
+    - packages/Rkesa/Dashboard/node_modules/
+    - bower_components/
+    - vendor/
+    
+before_script:
+  - apt-get update
+  - apt-get install sudo
+  - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+  - apt-get install zip unzip
+  - apt-get install -y nodejs
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - php composer-setup.php
+  - php -r "unlink('composer-setup.php');"
+
+stages:
+  - requirements
+  - build
+
+main:
+  stage: build
+  script:
+    - php composer.phar install --no-dev
+    - php artisan vendor:publish
+    - php artisan vue-i18n:generate
+    - npm install -g cross-env --silent
+    - npm run prod
+    - rm -rf node_modules/
+    - rm -rf bower_components/
+    - rm -rf packages/Rkesa/Calendar/node_modules/
+    - rm -rf packages/Rkesa/Client/node_modules/
+    - rm -rf packages/Rkesa/Estimate/node_modules/
+    - rm -rf packages/Rkesa/EstimateFork/node_modules/
+    - rm -rf packages/Rkesa/Hr/node_modules/
+    - rm -rf packages/Rkesa/Email/node_modules/
+    - rm -rf packages/Rkesa/Service/node_modules/
+    - rm -rf packages/Rkesa/Dashboard/node_modules/
+    - rm -rf .git/
+    - rm packages/Rkesa/Calendar/.git
+    - rm packages/Rkesa/Client/.git
+    - rm packages/Rkesa/Estimate/.git
+    - rm packages/Rkesa/EstimateFork/.git
+    - rm packages/Rkesa/Hr/.git
+    - rm packages/Rkesa/Email/.git
+    - rm packages/Rkesa/Service/.git
+    - rm packages/Rkesa/Dashboard/.git
+    - rm .gitlab-ci.yml
+    - rm .gitattributes
+    - echo "${CI_COMMIT_TAG}" > VERSION
+  artifacts:
+    paths:
+      - /builds/main/ERP/
+
+module-main:
+  stage: requirements
+  variables:
+        BOWER_VERSION: 1.7.9
+  script:
+   - npm install
+   - npm install -g bower@$BOWER_VERSION --silent
+   - bower install --allow-root
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - node_modules/
+      - bower_components/
+   
+module-calendar:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/Calendar
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/Calendar/node_modules/
+   
+module-client:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/Client
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/Client/node_modules/
+   
+module-estimate:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/Estimate
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/Estimate/node_modules/
+   
+module-estimate-fork:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/EstimateFork
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/EstimateFork/node_modules/
+   
+module-hr:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/Hr
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/Hr/node_modules/
+      
+module-email:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/Email
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/Email/node_modules/
+   
+module-service:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/Service
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/Service/node_modules/
+module-dashboard:
+  stage: requirements
+  script:
+   - cd packages/Rkesa/Dashboard
+   - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/Rkesa/Dashboard/node_modules/

@@ -1,0 +1,8 @@
+/.idea
+/node_modules
+vendor/afterlogic_webmail/data/temp/
+vendor/afterlogic_webmail/data/settings/settings.xml
+vendor/afterlogic_webmail/data/settings/settings.xml.bak
+vendor/afterlogic_webmail/node_modules
+mix-manifest.js
+package-lock.json

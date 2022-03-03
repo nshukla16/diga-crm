@@ -1,0 +1,19 @@
+# Container is deployed to rpger/digaerp:v5
+# To build it run:
+# sudo docker build -t rpger/digaerp:v5 -f Dockerfile.digaerp.v5 .
+# To push to docker hub run:
+# docker push rpger/digaerp:v5
+# Used in Gitlab CI
+# Includes nodejs (10)
+
+FROM roadiz/php72-runner
+
+RUN apt-get update
+RUN apt-get install sudo
+RUN apt-get install -y zip unzip
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php
+RUN php -r "unlink('composer-setup.php');"
+
+RUN npm install -g cross-env --silent

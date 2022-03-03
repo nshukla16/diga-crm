@@ -1,0 +1,26 @@
+{
+	"name": "p7",
+	"version": "7.5.0",
+	"release": "700",
+	"title": "AfterLogic Aurora Project",
+	"main": "Gruntfile.js",
+	"homepage": "http://afterlogic.com",
+	"author": {
+		"name": "AfterLogic",
+		"email": "support@afterlogic.com",
+		"web": "http://afterlogic.com"
+	},
+	"engines": {
+		"node": ">= 0.8.0"
+	},
+	"scripts": {
+		"preinstall": "npm i -g grunt-cli"
+	},
+	"devDependencies": {
+		"grunt": "~0.4.1",
+		"grunt-css": "*",
+		"grunt-contrib-watch": "*",
+		"grunt-contrib-less": "~0.5.2"
+	},
+	"license": "Custom"
+}

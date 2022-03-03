@@ -1,0 +1,40 @@
+# Instructions:
+# To start containers use this command: docker-compose -f docker-compose.remote-dev.yml up -d
+# To stop containers use this command: docker-compose -f docker-compose.remote-dev.yml down
+#
+# If you have ERROR: network erptest_default id ea3...fb5 has active endpoints
+# Disconnect containers from network manually:
+# docker network inspect erptest_default
+# docker network disconnect -f erptest_default php-fpm
+# docker network disconnect -f erptest_default mysql
+# If nothing helps remove containers:
+# docker rm -f <id>
+
+version: '2'
+services:
+    mysql:
+
+        build: docker_data/remote-dev/mysql
+        ports:
+            - "3307:3306"
+        container_name: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_USER=diga
+            - MYSQL_DATABASE=diga
+            - MYSQL_PASSWORD=password
+        volumes:
+            - ./docker_data/remote-dev/mysql/data:/var/lib/mysql
+
+    # Contains utils: nginx, supervisor, ssh-server, mc, git
+    php:
+        build: docker_data/remote-dev/php
+        container_name: php-fpm
+        volumes:
+            - ./docker_data/remote-dev/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./:/var/www/html/
+        ports:
+            - "52022:22"
+            - "82:80"
+        links:
+            - mysql
